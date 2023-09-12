@@ -67,27 +67,19 @@ int main(int argc,char **argv) {
             // Parse the input into arguments
             char* args[64];
             int arg_count = 0;
-            args[0] = strtok(input, " \t");
-            args[1] = NULL;
+	    char* token;
 
-  
-	    // cheaking if one argument
-                char* onearg = strtok(NULL, " \t");
+            token = strtok(input, " \t");
+            while(token != NULL)
+	    {
+	    	args[arg_count] = token;
+		arg_count++;
+		token = strtok(NULL, " \t");
+	    }
 
-		if(onearg != NULL)
-                {
-                        if (!is_interactive)
-                         {
-                                fprintf(stderr, "%s: 1: %s : not found\n", argv[0], args[0]);
-                         }
-                        else
-                         {
-                                 fprintf(stderr, "%s : No such file or directory\n", argv[0]);
-                         }
-			free(input);
-                        exit(1);
-                }
-            // Execute the command
+	    args[arg_count] = NULL;
+
+            // Execu the command
             execve(args[0], args, NULL);
 
 
@@ -115,7 +107,6 @@ int main(int argc,char **argv) {
             	waitpid(pid, &status, 0);
 	   }
     }
-    free(onearg);
     free(input); // Free the dynamically allocated memory for input
     return 0;
 }
