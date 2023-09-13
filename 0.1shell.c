@@ -107,6 +107,7 @@ int main(int argc,char **argv) {
             	waitpid(pid, &status, 0);
 	   }
     }
-    free(input); // Free the dynamically allocated memory for input
+    // Free the dynamically allocated memory for input
+ free(input);
     return 0;
 }
