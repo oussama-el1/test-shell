@@ -1,1 +1,1 @@
-test task shell
+tasks about simple shell
