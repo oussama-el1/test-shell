@@ -28,21 +28,46 @@ void exucuteCommand(char *command, char **argv)
 				token = strtok(NULL, " \t");
 			}
 			args[arg_count] = NULL;
-		execve(args[0], args, NULL);
-		if (errno == ENOENT && !intercative)
-		{
-			fprintf(stderr, "%s: 1: %s: not found\n", argv[0], args[0]);
-		}
-		else if (errno == ENOENT)
-		{
-			fprintf(stderr, "%s: No such file or directory\n", argv[0]);
-		}
-		else
-		{
-			perror("execve");
-			exit(EXIT_FAILURE);
-		}
-		
+			
+			if(args[0][0] == '/')
+			{
+				execve(args[0], args, NULL);
+				if (errno == ENOENT && !intercative)
+				{
+					fprintf(stderr, "%s: 1: %s: not found\n", argv[0], args[0]);
+				}
+				else if (errno == ENOENT)
+				{
+					fprintf(stderr, "%s: No such file or directory\n", argv[0]);
+				}
+				else
+				{
+					perror("execve");
+					exit(EXIT_FAILURE);
+				}
+			}
+			char *path = getenv("PATH");
+			if (path)
+			{
+				struct node *path_list = create_path_list(path);
+				struct node *current = path_list;
+				while(current)
+				{
+					struct node *full_path = (struct node *)malloc(strlen(current ->dir) + strlen(args[0]) + 2);
+					sprintf(full_path, "%s/%s", current ->dir, args[0]);
+					execve(full_path, args, NULL);
+					free(full_path);
+					current = current ->next;
+				}
+				if (!intercative)
+				{
+					fprintf(stderr, "%s: 1: %s: not found\n", argv[0], args[0]);
+				}
+				else
+				{
+					fprintf(stderr, "%s: No such file or directory\n", argv[0]);
+				}
+			}
 	}
 	else
 	{

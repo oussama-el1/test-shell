@@ -26,4 +26,9 @@ void read_command(char *command, size_t size)
 		}
 	}
 	command[strcspn(command, "\n")] = '\0';
+	if (strcmp(command, "exit") == 0)
+	{
+		my_print("exit shell\n");
+		exit(EXIT_SUCCESS);
+	}
 }
