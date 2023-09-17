@@ -9,6 +9,7 @@ int main(int argc, char **argv)
 {
 	char command[128];
 	int is_intercative = isatty(0);
+	(void)argc;
 
 	while (true)
 	{

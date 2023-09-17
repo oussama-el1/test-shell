@@ -5,6 +5,8 @@
 */
 void exucuteCommand(char *command, char **argv)
 {
+	char *path;
+
 	int intercative = isatty(0);
 
 	__pid_t child_pid = fork();
@@ -12,6 +14,7 @@ void exucuteCommand(char *command, char **argv)
 	if (child_pid == -1)
 	{
 		perror("fork");
+		free(command);
 		exit(EXIT_FAILURE);
 	}
 	else if (child_pid == 0)
@@ -46,14 +49,14 @@ void exucuteCommand(char *command, char **argv)
 					exit(EXIT_FAILURE);
 				}
 			}
-			char *path = getenv("PATH");
+			path = getenv("PATH");
 			if (path)
 			{
 				struct node *path_list = create_path_list(path);
 				struct node *current = path_list;
 				while(current)
 				{
-					struct node *full_path = (struct node *)malloc(strlen(current ->dir) + strlen(args[0]) + 2);
+					char *full_path = (char *)malloc(strlen(current ->dir) + strlen(args[0]) + 2);
 					sprintf(full_path, "%s/%s", current ->dir, args[0]);
 					execve(full_path, args, NULL);
 					free(full_path);
@@ -67,7 +70,9 @@ void exucuteCommand(char *command, char **argv)
 				{
 					fprintf(stderr, "%s: No such file or directory\n", argv[0]);
 				}
+				free_list(path_list);
 			}
+			free(command);
 	}
 	else
 	{

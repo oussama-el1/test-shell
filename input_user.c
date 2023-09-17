@@ -12,16 +12,19 @@ void read_command(char *command, size_t size)
 	{
 		if (!intercative && feof(stdin))
 		{
+			free(command);
 			exit(EXIT_SUCCESS);
 		}
 		else if (feof(stdin))
 		{
 			my_print("\n");
+			free(command);
 			exit(EXIT_SUCCESS);
 		}
 		else
 		{
 			my_print("Error when reading input \n");
+			free(command);
 			exit(EXIT_FAILURE);
 		}
 	}
