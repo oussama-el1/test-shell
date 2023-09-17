@@ -6,6 +6,7 @@
 */
 void read_command(char *command, size_t size)
 {
+	extern char **environ;
 	int intercative = isatty(0);
 
 	if (fgets(command, size, stdin) == NULL)
@@ -33,5 +34,17 @@ void read_command(char *command, size_t size)
 	{
 		my_print("exit shell\n");
 		exit(EXIT_SUCCESS);
+	}
+	if (strcmp(command, "env") == 0)
+	{
+		char **env;
+
+		env = environ;
+		while (*env != NULL)
+		{
+			my_print(*env);
+			my_print("\n");
+			env++;
+		}
 	}
 }
