@@ -7,6 +7,7 @@
 #include <stdbool.h>
 #include <sys/wait.h>
 #include <errno.h>
+
 extern char **environ;
 /**
  * struct node - creating node to store the paths
