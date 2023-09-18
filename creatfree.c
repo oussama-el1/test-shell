@@ -1,10 +1,15 @@
 #include "shell.h"
 
-/**
- * 
- * 
- * 
-*/
+void free_list(list* head) 
+{
+    while (head != NULL) {
+        list* temp = head;
+        head = head->next;
+        free(temp->dir);
+        free(temp);
+    }
+}
+
 
 list* creation_list() {
     char* path;
@@ -20,19 +25,18 @@ list* creation_list() {
     while (token != NULL) {
         new_node = (list*)malloc(sizeof(list));
         if (new_node == NULL) {
-            fprintf(stderr, "allocation error\n");
+            write_message("allocation error\n");
             return NULL;
         }
 
         new_node->dir = strdup(token);
         if (new_node->dir == NULL) {
-            fprintf(stderr, "strdup error\n");
+            write_message("strdup error\n");
             return NULL;
         }
 
         new_node->next = NULL;
 
-        // Add to empty list
         if (head == NULL) {
             head = new_node;
             tail = new_node;

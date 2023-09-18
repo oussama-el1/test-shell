@@ -1,5 +1,5 @@
-#ifndef SHELL_H
-#define SHELL_H
+#ifndef SHELL_FUNCTIONS_H
+#define SHELL_FUNCTIONS_H
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -8,26 +8,17 @@
 #include <sys/wait.h>
 #include <errno.h>
 
-/**
- * 
- * 
- * 
-*/
-
 typedef struct list {
     char* dir;
     struct list* next;
 } list;
 
+void print_prompt();
+void myfunc(char *input);
+char* get_user_input(int is_interactive);
+void write_message(const char* message);
 list* creation_list();
 void free_list(list* head);
-void displayprompt();
-ssize_t get_input(input, input_size);
-void my_print(const char *message);
-void removenline(size_t line_length,char* input);
-void exitshell(char* input);
-void envglobal(char* input);
-void execute_c(pid_t pid, int is_interactive, char* input);
+void cret_procees(int is_interactive, char **argiv, char* input);
 
-
-#endif
+#endif /* SHELL_FUNCTIONS_H */
