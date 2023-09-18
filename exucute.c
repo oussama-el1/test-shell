@@ -62,6 +62,7 @@ void exucuteCommand(char *command, char **argv)
 					free(full_path);
 					current = current ->next;
 				}
+				free_list(path_list);
 				if (!intercative)
 				{
 					fprintf(stderr, "%s: 1: %s: not found\n", argv[0], args[0]);
@@ -70,7 +71,6 @@ void exucuteCommand(char *command, char **argv)
 				{
 					fprintf(stderr, "%s: No such file or directory\n", argv[0]);
 				}
-				free_list(path_list);
 			}
 			free(command);
 	}
