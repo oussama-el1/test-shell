@@ -16,7 +16,6 @@ char *get_user_input(int is_interactive)
 	{
 		if (!is_interactive && feof(stdin))
 		{
-			my_print("Shell$>");
 			free(input);
 			exit(EXIT_SUCCESS);
 		}
