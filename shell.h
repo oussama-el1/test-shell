@@ -24,5 +24,7 @@ void displayprompt(void);
 void exucuteCommand(char *command, char **argv);
 struct node *create_path_list(char *path);
 void free_list(struct node *head);
+void myfunc(char *input);
+char *get_user_input(int is_interactive);
 
 #endif

@@ -5,5 +5,8 @@
 */
 void displayprompt(void)
 {
+	int is_intercative = isatty(0);
+
+	if (is_intercative)
 	my_print("Shell$>");
 }
