@@ -26,5 +26,8 @@ struct node *create_path_list(char *path);
 void free_list(struct node *head);
 void myfunc(char *input);
 char *get_user_input(int is_interactive);
+void withpath(char *path, int intercative, char **args, char **argv);
+void withoutpath(char **args, char **argv, int intercative);
+
 
 #endif
